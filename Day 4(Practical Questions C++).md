@@ -1094,22 +1094,30 @@ int main() {
 using namespace std;
 
 int main() {
-    int rows;
-    cout << "Enter the number of rows: ";
-    cin >> rows;
+    int rows = 5;
 
-    for (int i = 1; i <= rows; ++i) {
-        for (int j = i; j < rows; ++j) {
-            cout << " ";
+    for (int i = 1; i <= rows; i++) {
+        // Print leading spaces
+        for (int space = 1; space <= rows - i; space++) {
+            cout << "  ";
         }
-        for (int j = 1; j <= (2 * i - 1); ++j) {
-            cout << i + j - 1 << " ";
+
+        // Print the increasing sequence
+        for (int j = i; j < 2 * i; j++) {
+            cout << j << " ";
         }
-        cout << endl;
+
+        // Print the decreasing sequence
+        for (int j = 2 * i - 2; j >= i; j--) {
+            cout << j << " ";
+        }
+
+        cout << endl; // Move to the next row
     }
 
     return 0;
 }
+
 ```
 
 ---
