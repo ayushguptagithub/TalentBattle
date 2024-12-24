@@ -1154,25 +1154,27 @@ int main() {
 using namespace std;
 
 int main() {
-    int rows;
-    cout << "Enter the number of rows: ";
-    cin >> rows;
+    int rows = 5;
 
-    for (int i = 0; i < rows; ++i) {
-        int val = 1;
-        for (int j = 0; j <= i; ++j) {
-            if (j == 0 || j == i)
-                cout << val << " ";
-            else {
-                val = val * (i - j + 1) / j;
-                cout << val << " ";
-            }
+    for (int i = 0; i < rows; i++) {
+        // Print leading spaces for pyramid shape
+        for (int space = 1; space < rows - i; space++) {
+            cout << " ";
         }
-        cout << endl;
+
+        // Print the values for each row
+        int value = 1;
+        for (int j = 0; j <= i; j++) {
+            cout << value << " ";
+            value = value * (i - j) / (j + 1);
+        }
+
+        cout << endl; // Move to the next row
     }
 
     return 0;
 }
+
 ```
 
 ---
