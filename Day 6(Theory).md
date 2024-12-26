@@ -1030,3 +1030,201 @@ Employee Name: John Doe
 4. **Flexibility**: Internal implementation can be changed without altering external code.
 
 ---
+### **Vectors in C++**
+A **vector** in C++ is a dynamic array provided by the **Standard Template Library (STL)**. Unlike arrays, vectors can grow or shrink dynamically as elements are added or removed. They are implemented as **templates** in the `<vector>` header.
+
+---
+
+### **Key Features of Vectors**
+1. **Dynamic Size**: Vectors automatically resize when elements are added or removed.
+2. **Random Access**: Elements can be accessed directly using indices, just like arrays.
+3. **Efficient Insertion/Deletion**: Insertion at the end of a vector is efficient, but insertion/deletion in the middle requires shifting elements.
+4. **Type Safety**: Since vectors are templates, you can create vectors of any data type.
+5. **Built-in Methods**: Vectors provide many useful functions, such as adding, removing, and searching for elements.
+
+---
+
+### **Basic Syntax**
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    // Declare a vector of integers
+    vector<int> v;
+
+    // Add elements
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+
+    // Access elements
+    cout << "Element at index 0: " << v[0] << endl;
+
+    // Remove the last element
+    v.pop_back();
+
+    // Display size
+    cout << "Size of vector: " << v.size() << endl;
+
+    return 0;
+}
+```
+
+---
+
+### **Common Functions**
+1. **Initialization**:
+   ```cpp
+   vector<int> v;                      // Empty vector
+   vector<int> v(5, 10);               // Vector of size 5, initialized with 10
+   vector<int> v2 = {1, 2, 3, 4, 5};   // Initialization with a list
+   ```
+
+2. **Adding Elements**:
+   - `push_back(value)`: Appends an element to the end.
+   - `emplace_back(value)`: Constructs an element at the end.
+
+3. **Removing Elements**:
+   - `pop_back()`: Removes the last element.
+   - `erase(iterator)`: Removes an element at the specified position.
+   - `clear()`: Removes all elements.
+
+4. **Accessing Elements**:
+   - `v[index]`: Access by index (no bounds checking).
+   - `v.at(index)`: Access by index with bounds checking.
+   - `front()`: Returns the first element.
+   - `back()`: Returns the last element.
+
+5. **Size and Capacity**:
+   - `size()`: Number of elements in the vector.
+   - `capacity()`: Space allocated for the vector (can be greater than `size()`).
+   - `resize(new_size)`: Resizes the vector.
+
+6. **Iterators**:
+   - `begin()`, `end()`: Access the start and end of the vector.
+   - `rbegin()`, `rend()`: Access in reverse order.
+
+---
+
+### **Examples**
+
+#### **1. Basic Vector Operations**
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<int> v = {10, 20, 30, 40};
+
+    // Adding elements
+    v.push_back(50);
+
+    // Accessing elements
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+
+    // Removing elements
+    v.pop_back();
+    v.erase(v.begin() + 1); // Remove element at index 1
+
+    // Display remaining elements
+    for (int x : v) {
+        cout << x << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
+#### **2. Using Iterators**
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<int> v = {1, 2, 3, 4, 5};
+
+    // Using iterators to traverse the vector
+    for (auto it = v.begin(); it != v.end(); ++it) {
+        cout << *it << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
+#### **3. Working with 2D Vectors**
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<vector<int>> matrix = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9}
+    };
+
+    // Display the 2D vector
+    for (auto row : matrix) {
+        for (auto col : row) {
+            cout << col << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
+#### **4. Sorting a Vector**
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm> // For sort()
+using namespace std;
+
+int main() {
+    vector<int> v = {40, 10, 30, 20};
+
+    // Sort the vector
+    sort(v.begin(), v.end());
+
+    // Display sorted vector
+    for (int x : v) {
+        cout << x << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+```
+
+---
+
+### **Advantages of Vectors**
+- Dynamic resizing without manual memory management.
+- Provides extensive member functions for easier manipulation.
+- Supports iterators for flexible traversal.
+
+---
+
+### **Disadvantages of Vectors**
+- Resizing can involve copying all elements to a new memory block.
+- Random insertions and deletions (except at the end) are less efficient due to shifting elements.
+
+---
+
+### **When to Use Vectors**
+- When you need a dynamic array that can resize automatically.
+- When you require built-in methods for easy data management.
+- For use cases where frequent addition/removal happens at the end of the array.
