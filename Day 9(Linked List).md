@@ -425,4 +425,172 @@ int main() {
 5. **Delete from End**:
    - Traverse to the second-to-last node and update its `next` pointer to the head.
 
-Let me know if you need further clarifications or variations! 😊
+
+### **What is Hashing?**
+
+Hashing is a process of mapping large data sets to smaller fixed-size values, called hash values or hash codes, using a function called a **hash function**. Hashing is widely used in data storage, retrieval, and security applications.
+
+The main goal of hashing is to ensure efficient searching and retrieval of data.
+
+---
+
+### **Key Concepts in Hashing**
+
+1. **Hash Function**:
+   - A function \( H(x) \) that takes an input \( x \) and produces a fixed-size hash value.
+   - Example: For a string "apple", a hash function might output a hash value of 42.
+
+2. **Hash Table**:
+   - A data structure that stores data in an associative manner using hash values as indices.
+   - Example: Keys and values are stored, where the hash function determines the location.
+
+3. **Collision**:
+   - When two different inputs produce the same hash value.
+   - Example: "abc" and "xyz" might both produce the hash value 45.
+   - **Resolution Techniques**:
+     - **Chaining**: Store multiple elements at the same hash index using a linked list.
+     - **Open Addressing**: Probe for the next available slot.
+
+4. **Load Factor**:
+   - Ratio of the number of elements stored to the total number of slots in the table.
+   - \( \text{Load Factor} = \frac{\text{Number of Elements}}{\text{Size of Hash Table}} \)
+
+5. **Applications**:
+   - Database indexing
+   - Password storage
+   - Caches
+   - Data deduplication
+
+---
+
+### **Types of Hashing Techniques**
+
+1. **Direct Hashing**:
+   - The key itself is used as the hash index.
+   - Simple but requires a large table size.
+
+2. **Modulo-Division Method**:
+   - Hash index = \( \text{Key} \% \text{Table Size} \)
+   - Effective for uniformly distributed data.
+
+3. **Multiplicative Hashing**:
+   - Use a multiplication factor to derive the hash value.
+   - Formula: \( h(k) = \lfloor M \times (k \times A \mod 1) \rfloor \)
+     - \( M \): Table size, \( A \): Constant.
+
+4. **Mid-Square Method**:
+   - Square the key and extract a portion of the result to determine the index.
+
+5. **Folding Method**:
+   - Divide the key into parts, add them together, and use modulo.
+
+---
+
+### **C++ Implementation of Hashing**
+
+Here’s an example implementation of a hash table using chaining to resolve collisions:
+
+```cpp
+#include <iostream>
+#include <list>
+using namespace std;
+
+class HashTable {
+    int size;                // Size of hash table
+    list<int>* table;        // Array of linked lists
+
+public:
+    HashTable(int size) {
+        this->size = size;
+        table = new list<int>[size];
+    }
+
+    // Hash function
+    int hashFunction(int key) {
+        return key % size;
+    }
+
+    // Insert a key into the hash table
+    void insert(int key) {
+        int index = hashFunction(key);
+        table[index].push_back(key);
+    }
+
+    // Remove a key from the hash table
+    void remove(int key) {
+        int index = hashFunction(key);
+        table[index].remove(key);
+    }
+
+    // Search for a key in the hash table
+    bool search(int key) {
+        int index = hashFunction(key);
+        for (int element : table[index]) {
+            if (element == key) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Display the hash table
+    void display() {
+        for (int i = 0; i < size; i++) {
+            cout << "Index " << i << ": ";
+            for (int element : table[i]) {
+                cout << element << " -> ";
+            }
+            cout << "nullptr" << endl;
+        }
+    }
+
+    ~HashTable() {
+        delete[] table;
+    }
+};
+
+int main() {
+    HashTable hashTable(7);
+
+    hashTable.insert(10);
+    hashTable.insert(20);
+    hashTable.insert(15);
+    hashTable.insert(7);
+    hashTable.insert(22);
+
+    hashTable.display();
+
+    cout << "Searching for 15: " << (hashTable.search(15) ? "Found" : "Not Found") << endl;
+
+    hashTable.remove(15);
+    cout << "After removing 15:" << endl;
+    hashTable.display();
+
+    return 0;
+}
+```
+
+---
+
+### **Explanation of the Code**
+
+1. **Structure**:
+   - The hash table is implemented using an array of linked lists.
+   - Each index of the array is a bucket.
+
+2. **Hash Function**:
+   - \( \text{Key} \% \text{Size} \) is used to determine the index for a key.
+
+3. **Insertion**:
+   - The key is inserted into the linked list at the calculated index.
+
+4. **Search**:
+   - The linked list at the hashed index is traversed to find the key.
+
+5. **Deletion**:
+   - The key is removed from the linked list at the hashed index.
+
+6. **Display**:
+   - Each index and its contents are displayed.
+
+---
