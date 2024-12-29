@@ -594,3 +594,111 @@ int main() {
    - Each index and its contents are displayed.
 
 ---
+
+### **Simplified Hash Table Code using Vectors Vector**
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Simple Hash Table class using chaining
+class HashTable {
+    int size;                        // Size of the hash table
+    vector<vector<int>> table;       // Vector of vectors to store chains
+
+public:
+    HashTable(int size) {
+        this->size = size;
+        table.resize(size);          // Initialize with empty chains
+    }
+
+    // Hash function to calculate index
+    int hashFunction(int key) {
+        return key % size;
+    }
+
+    // Insert a key into the hash table
+    void insert(int key) {
+        int index = hashFunction(key);
+        table[index].push_back(key); // Add key to the appropriate chain
+    }
+
+    // Search for a key in the hash table
+    bool search(int key) {
+        int index = hashFunction(key);
+        for (int element : table[index]) {
+            if (element == key) {
+                return true;         // Key found
+            }
+        }
+        return false;                // Key not found
+    }
+
+    // Display the hash table
+    void display() {
+        for (int i = 0; i < size; i++) {
+            cout << "Index " << i << ": ";
+            for (int element : table[i]) {
+                cout << element << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    HashTable hashTable(5);  // Create a hash table with 5 slots
+
+    // Insert keys into the hash table
+    hashTable.insert(10);
+    hashTable.insert(15);
+    hashTable.insert(20);
+    hashTable.insert(25);
+    hashTable.insert(30);
+
+    // Display the hash table
+    cout << "Hash Table:" << endl;
+    hashTable.display();
+
+    // Search for keys
+    cout << "Searching for 15: " << (hashTable.search(15) ? "Found" : "Not Found") << endl;
+    cout << "Searching for 40: " << (hashTable.search(40) ? "Found" : "Not Found") << endl;
+
+    return 0;
+}
+```
+
+---
+
+### **Explanation**
+
+1. **Hash Function**:
+   - \( \text{Key} \% \text{Size} \) determines the index for a key. For example, if the size is 5 and the key is 10, \( 10 \% 5 = 0 \).
+
+2. **Data Storage**:
+   - The hash table is implemented using a vector of vectors, where each vector at an index represents a chain.
+
+3. **Insertion**:
+   - Keys are added to the chain at the calculated index.
+
+4. **Search**:
+   - The chain at the hashed index is traversed to find the key.
+
+5. **Display**:
+   - All indices and their corresponding keys are printed.
+
+---
+
+### **Output**
+
+```
+Hash Table:
+Index 0: 10 15 20 25 30
+Index 1: 
+Index 2: 
+Index 3: 
+Index 4: 
+Searching for 15: Found
+Searching for 40: Not Found
+```
