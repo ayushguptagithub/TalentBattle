@@ -499,3 +499,96 @@ int main() {
 ### **Conclusion**
 - **Linear Search**: Use when data is unsorted or for small datasets.
 - **Binary Search**: Use for sorted and large datasets for better performance.
+
+
+
+### **Fibonacci Search**
+
+### Code:
+```cpp
+#include <iostream>
+using namespace std;
+
+int fibonacciSearch(int arr[], int n, int x) {
+    // Initialize Fibonacci numbers
+    int fib2 = 0; // (k-2)th Fibonacci number
+    int fib1 = 1; // (k-1)th Fibonacci number
+    int fib = fib2 + fib1; // k-th Fibonacci number
+
+    // Find the smallest Fibonacci number greater or equal to n
+    while (fib < n) {
+        fib2 = fib1;
+        fib1 = fib;
+        fib = fib2 + fib1;
+    }
+
+    // Marks the eliminated range from the front
+    int offset = -1;
+
+    // While there are elements to be inspected
+    while (fib > 1) {
+        // Check if fib2 is a valid location
+        int i = min(offset + fib2, n - 1);
+
+        // If x is greater than the value at index fib2, cut the subarray array from offset to i
+        if (arr[i] < x) {
+            fib = fib1;
+            fib1 = fib2;
+            fib2 = fib - fib1;
+            offset = i;
+        }
+        // If x is smaller than the value at index fib2, cut the subarray after i+1
+        else if (arr[i] > x) {
+            fib = fib2;
+            fib1 = fib1 - fib2;
+            fib2 = fib - fib1;
+        }
+        // Element found
+        else {
+            return i;
+        }
+    }
+
+    // Compare the last element with x
+    if (fib1 && arr[offset + 1] == x) {
+        return offset + 1;
+    }
+
+    // Element not found
+    return -1;
+}
+
+int main() {
+    int arr[] = {10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 85;
+
+    int index = fibonacciSearch(arr, n, x);
+
+    if (index >= 0) {
+        cout << "Element found at index: " << index << endl;
+    } else {
+        cout << "Element not found!" << endl;
+    }
+
+    return 0;
+}
+```
+
+### Explanation:
+1. **Fibonacci Numbers**: 
+   - A Fibonacci sequence is used to divide the array into sections for searching.
+   
+2. **Steps**:
+   - The smallest Fibonacci number greater than or equal to the size of the array is determined.
+   - The array is then divided into sections according to Fibonacci ratios.
+   - The search compares the target with elements at these sections and eliminates parts of the array.
+
+3. **Time Complexity**:
+   - The average case is \(O(\log n)\).
+
+### Example Output:
+For the input array `{10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100}` and search element `85`:
+```
+Element found at index: 8
+```
